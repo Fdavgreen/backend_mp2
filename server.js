@@ -1,25 +1,26 @@
-// DEPENDENCIES
-const express = require('express')
-const app = express()
-const { Sequelize } = require('sequelize')
+const express = require('express');
+const app = express();
+const dotenv = require('dotenv');
+const expensesRouter = require('./controllers/expense_Controller'); 
+// Load environment variables
+dotenv.config();
 
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-// CONFIGURATION / MIDDLEWARE
-require('dotenv').config()
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
-
-
-
-// ROOT
+// Root route
 app.get('/', (req, res) => {
     res.status(200).json({
         message: 'Welcome to our expense tracker app'
-    })
-})
+    });
+});
 
+// expenses routes
+app.use('/expenses', expensesRouter);
 
-// LISTEN
-app.listen(process.env.PORT, () => {
-    console.log(`Tracking on Port: ${process.env.PORT}`)
-})
+// Start server
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
