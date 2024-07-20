@@ -1,13 +1,15 @@
 const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
-const expensesRouter = require('./controllers/expense_Controller'); 
+const cors = require('cors');
+
 // Load environment variables
 dotenv.config();
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 
 // Root route
 app.get('/', (req, res) => {
@@ -16,8 +18,20 @@ app.get('/', (req, res) => {
     });
 });
 
-// expenses routes
+// Controller routes
+const expensesRouter = require('./controllers/expense_Controller'); 
 app.use('/expenses', expensesRouter);
+
+// Mock API endpoint for balance
+app.get('/balance', (req, res) => {
+    const mockBalance = {
+        accountNumber: '123456789',
+        balance: 829.25,
+        currency: 'USD'
+    };
+    res.json(mockBalance);
+});
+
 
 // Start server
 const PORT = process.env.PORT || 3001;
