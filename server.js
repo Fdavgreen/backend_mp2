@@ -32,6 +32,13 @@ app.get('/balance', (req, res) => {
     res.json(mockBalance);
 });
 
+// AddEmail route
+app.post('/api/send', (req, res) => {
+  const { to, subject, text, html } = req.body;
+  // Logic to send email (e.g., using nodemailer)
+  res.json({ message: 'Email sent successfully' });
+});
+
 
 // Start server
 const PORT = process.env.PORT || 3001;
