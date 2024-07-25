@@ -13,35 +13,31 @@ app.use(cors());
 
 // Root route
 app.get('/', (req, res) => {
-    res.status(200).json({
-        message: 'Welcome to our expense tracker app'
-    });
+  res.status(200).json({
+    message: 'Welcome to our expense tracker app'
+  });
 });
 
 // Controller routes
-const expensesRouter = require('./controllers/expense_Controller'); 
+const expensesRouter = require('./controllers/expense_Controller');
 app.use('/expenses', expensesRouter);
+
+const emailRouter = require('./controllers/email_controller');
+app.use('/emails', emailRouter);
+
 
 // Mock API endpoint for balance
 app.get('/balance', (req, res) => {
-    const mockBalance = {
-        accountNumber: '123456789',
-        balance: 829.25,
-        currency: 'USD'
-    };
-    res.json(mockBalance);
+  const mockBalance = {
+    accountNumber: '123456789',
+    balance: 829.25,
+    currency: 'USD'
+  };
+  res.json(mockBalance);
 });
-
-// AddEmail route
-app.post('/api/send', (req, res) => {
-  const { to, subject, text, html } = req.body;
-  // Logic to send email (e.g., using nodemailer)
-  res.json({ message: 'Email sent successfully' });
-});
-
 
 // Start server
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });

@@ -1,9 +1,18 @@
 const express = require('express');
-const router = express.Router();
-const emailController = require('../backend/controllers/emailController');
-const authMiddleware = require('../backend/middleware/authMiddleware');
+const bodyParser = require('body-parser');
+const emails = require('./routes/emailRoutes')
 
-// Route to send an email
-router.post('/send', authMiddleware, emailController.sendEmail);
+const app = express();
+app.use(bodyParser.json());
+app.use('./emails', emails);
 
-module.exports = router;  // Export the router
+
+
+
+// const express = require('express');
+// const emails = require('../controllers/email_controller');
+
+// const router = express.Router();
+// router.use('/', emails);
+
+// module.exports = router;
